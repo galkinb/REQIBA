@@ -4,9 +4,7 @@ library(spatstat)
 library(VGAM)
 library(hypergeo)
 library(keras)
-library(tensorflow)
 library(parallel)
-library(matlab)
 source("MiscFunctions.R")
 
 
@@ -15,9 +13,7 @@ MCtrials = 1000
 episodes = 1
 steps = 100
 
-#how many candidate BSs to consider, and how many interfering BSs to consider per candidate
-BScand = 10
-BScandi = 125
+
 
 handoverpenalty = 0.5
 
@@ -139,7 +135,7 @@ regressionModel %>% compile(
   metrics = c('mae')
 )
 
-regressionModel %>% load_model_weights_hdf5("IPNNweights.h5")
+regressionModel %>% load_model_weights_hdf5("IPNNWeights.h5")
 
 
 h = seq(from=20,to=200,by=180/10)
@@ -584,7 +580,7 @@ for(m in 1:MCtrials){
       
    #   avg = vector(length=k)
     #    for(i in 50:k){
-    #    avg[i] = mean(achieveableRate[(i-50):i]/randAchieveableRate[(i-50):i])  
+    #    avg[i] = mean(achieveableRate[(i-50):i]/closestAchieveableRate[(i-50):i])  
     #    }
       
       }
@@ -632,9 +628,9 @@ for(m in 1:MCtrials){
   strongestA = vector(length=length(h))
   strongestH = vector(length=length(h))
   for(i in 1:length(h)){
-  dqnA[i] = mean(achieveableRate[500:1000,i]/randAchieveableRate[500:1000,i])
+  dqnA[i] = mean(achieveableRate[500:1000,i]/closestAchieveableRate[500:1000,i])
   dqnH[i] = mean(handovers[500:1000,i])
-  strongestA[i]=mean(maxAssAchieveableRate[,i]/randAchieveableRate[,i])
+  strongestA[i]=mean(maxAssAchieveableRate[,i]/closestAchieveableRate[,i])
   strongestH[i]=mean(maxAsshandovers[,i]) 
   }
   
