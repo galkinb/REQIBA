@@ -13,6 +13,9 @@ MCtrials = 1000
 episodes = 1
 steps = 100
 
+#how many candidate BSs to consider, and how many interfering BSs to consider per candidate
+BScand = 10
+BScandi = 125
 
 
 handoverpenalty = 0.5
@@ -135,7 +138,7 @@ regressionModel %>% compile(
   metrics = c('mae')
 )
 
-regressionModel %>% load_model_weights_hdf5("IPNNWeights.h5")
+regressionModel %>% load_model_weights_hdf5("IPNNweights.h5")
 
 
 h = seq(from=20,to=200,by=180/10)
@@ -630,8 +633,8 @@ for(m in 1:MCtrials){
   for(i in 1:length(h)){
   dqnA[i] = mean(achieveableRate[500:1000,i]/closestAchieveableRate[500:1000,i])
   dqnH[i] = mean(handovers[500:1000,i])
-  strongestA[i]=mean(maxAssAchieveableRate[,i]/closestAchieveableRate[,i])
-  strongestH[i]=mean(maxAsshandovers[,i]) 
+  strongestA[i]=mean(oSINRAchieveableRate[,i]/closestAchieveableRate[,i])
+  strongestH[i]=mean(oSINRHandovers[,i]) 
   }
   
   lines(x=h,y=dqnA,lwd=3)
