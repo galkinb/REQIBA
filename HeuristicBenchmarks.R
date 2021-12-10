@@ -176,7 +176,7 @@ K = (((3*10^8)/Freq)/(4*pi))^2
 load("REQIBAEvaluation.RData")
 
 #multiple MC trials. In each trial we generate the environment and then run the algorithm over multiple episodes
-for(l in 10:length(h)){
+for(l in 1:length(h)){
 for(m in 1:MCtrials){
     print(m)
 
